@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Índice con AngularJS</title>
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+    />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script type="module">
+      import { pantallaNormal, tablet, movil } from "./js/Estilos.js";
+      pantallaNormal();
+      tablet();
+      movil();
+    </script>
+  </head>
+
+  <body>
+    <div style="display: flex; flex-direction: row" ng-app="appLectura">
+      <!--Esto es un índice-->
+      <div id="column-indice" ng-controller="CtrlArticulo">
+        <!--Esto es índice de capítulo I-->
+        <a class="capitulos-indice" ng-click="toggleIndices(0)">
+          <div ng-controller="CtrlCapitulos">
+            <div ng-repeat="capitulo in capitulos | limitTo:1">
+              <span ng-bind-html="capitulo"></span>
+              <i
+                class="glyphicon"
+                ng-class="{'glyphicon-chevron-up': indicesVisibles[0], 'glyphicon-chevron-down': !indicesVisibles[0]}"
+              >
+              </i>
+            </div>
+          </div>
+        </a>
+        <!--Demuestra la lista de los artículos de capítulo I para índice  scroll-on-click-->
+        <ul class="indices" ng-show="indicesVisibles[0]">
+          <li ng-repeat="articulo in articulos | limitTo:3">
+            <a ng-bind-html="articulo" ng-click="scroll($event)"></a>
+          </li>
+        </ul>
+        <!--------------------------------->
+        <!--Esto es índice de capítulo II-->
+        <a class="capitulos-indice" ng-click="toggleIndices(1)">
+          <div ng-controller="CtrlCapitulos">
+            <div ng-repeat="capitulo in capitulos | limitTo:2:1">
+              <span ng-bind-html="capitulo"></span>
+              <i
+                class="glyphicon"
+                ng-class="{'glyphicon-chevron-up': indicesVisibles[1], 'glyphicon-chevron-down': !indicesVisibles[1]}"
+              >
+              </i>
+            </div>
+          </div>
+        </a>
+        <!--Demuestra la lista de los artículos de capítulo II para índice ng-click="scroll($event)" scroll-on-click-->
+        <ul class="indices" ng-show="indicesVisibles[1]">
+          <li ng-repeat="articulo in articulos | limitTo:3:3">
+            <a ng-bind-html="articulo" ng-click="scroll($event)"></a>
+          </li>
+        </ul>
+        <!--------------------------------->
+      </div>
+      <!--Se acapa el índice-->
+      <div id="boton-flotante">
+        <button class="botones b"><span class="agregar">I</span></button>
+        <button class="botones b"><span class="agregar">X</span></button>
+      </div>
+      <!--Son los capítulos, artículos y parrafos-->
+      <div id="contenido">
+        <div ng-controller="CtrlParrafos">
+          <div class="chapters">
+            <!--Empieza por capítulo I-->
+            <h1>
+              <a class="aparacionesCapitulos" ng-click="Parrafos_visibles(0)">
+                <div ng-controller="CtrlCapitulos">
+                  <div ng-repeat="capitulo in capitulos | limitTo:1">
+                    <span ng-bind-html="capitulo"></span>
+                    <i
+                      class="glyphicon"
+                      ng-class="{'glyphicon-chevron-down': mostrar_parrafos[0], 'glyphicon-chevron-up': !mostrar_parrafos[0]}"
+                    ></i>
+                  </div>
+                </div>
+              </a>
+            </h1>
+            <!--Demuestra el primer artículo para capítulo I-->
+            <div class="articles" ng-controller="CtrlArticulo">
+              <li ng-repeat="articulo in articulos | limitTo:1">
+                <a ng-bind-html="articulo" ng-show="mostrar_parrafos[0]"></a>
+              </li>
+            </div>
+            <!--Dentro del artículo introduce los parráfos-->
+            <p ng-bind-html="parrafos[0]" ng-show="mostrar_parrafos[0]"></p>
+            <p ng-bind-html="parrafos[1]" ng-show="mostrar_parrafos[0]"></p>
+            <p ng-bind-html="parrafos[2]" ng-show="mostrar_parrafos[0]"></p>
+            <p ng-bind-html="parrafos[3]" ng-show="mostrar_parrafos[0]"></p>
+            <!--Esto se acaba el primer artículo-->
+            <!--Demuestra el segundo artículo para capítulo I-->
+            <div class="articles" ng-controller="CtrlArticulo">
+              <li ng-repeat="articulo in articulos | limitTo:1:1">
+                <a ng-bind-html="articulo" ng-show="mostrar_parrafos[0]"></a>
+              </li>
+            </div>
+            <!--Dentro del artículo introduce los parráfos-->
+            <p ng-bind-html="parrafos[4]" ng-show="mostrar_parrafos[0]"></p>
+            <p ng-bind-html="parrafos[5]" ng-show="mostrar_parrafos[0]"></p>
+            <p ng-bind-html="parrafos[6]" ng-show="mostrar_parrafos[0]"></p>
+            <!--Esto se acaba el segundo artículo-->
+            <!--Demuestra el tercer artículo para capítulo I-->
+            <div class="articles" ng-controller="CtrlArticulo">
+              <li ng-repeat="articulo in articulos | limitTo:1:2">
+                <a ng-bind-html="articulo" ng-show="mostrar_parrafos[0]"></a>
+              </li>
+            </div>
+            <!--Dentro del artículo introduce los parráfos-->
+            <p ng-bind-html="parrafos[7]" ng-show="mostrar_parrafos[0]"></p>
+            <p ng-bind-html="parrafos[8]" ng-show="mostrar_parrafos[0]"></p>
+            <p ng-bind-html="parrafos[9]" ng-show="mostrar_parrafos[0]"></p>
+            <!--Esto se acaba el tercer artículo de capítulo I-->
+            <!--Empieza por capítulo II-->
+            <h1>
+              <a class="aparacionesCapitulos" ng-click="Parrafos_visibles(1)">
+                <div ng-controller="CtrlCapitulos">
+                  <div ng-repeat="capitulo in capitulos | limitTo:2:1">
+                    <span ng-bind-html="capitulo"></span>
+                    <i
+                      class="glyphicon"
+                      ng-class="{'glyphicon-chevron-down': mostrar_parrafos[1], 'glyphicon-chevron-up': !mostrar_parrafos[1]}"
+                    ></i>
+                  </div>
+                </div>
+              </a>
+            </h1>
+
+            <!--Demuestra el primer artículo para capítulo II-->
+            <div class="articles" ng-controller="CtrlArticulo">
+              <li ng-repeat="articulo in articulos | limitTo:1:3">
+                <a
+                  ng-bind-html="articulo"
+                  ng-show="mostrar_parrafos[1]"
+                  class="pis"
+                ></a>
+              </li>
+            </div>
+            <!--Dentro del artículo introduce los parráfos-->
+            <p ng-bind-html="parrafos[10]" ng-show="mostrar_parrafos[1]"></p>
+            <p ng-bind-html="parrafos[11]" ng-show="mostrar_parrafos[1]"></p>
+            <p ng-bind-html="parrafos[12]" ng-show="mostrar_parrafos[1]"></p>
+            <p ng-bind-html="parrafos[13]" ng-show="mostrar_parrafos[1]"></p>
+            <!--Esto se acaba el primer artículo-->
+          </div>
+          <!--------------------------->
+        </div>
+      </div>
+    </div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular-animate.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular-sanitize.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+    <script>
+      let cadenaCapitulos = [];
+      let cadenaArticulos = [];
+      let cadenaParrafos = [];
+      let cajaTexto = angular.module("appLectura", ["ngSanitize", "ngAnimate"]);
+      cajaTexto
+        .animation(".capitulos", function () {
+          return {
+            enter: function (element, done) {
+              element.css("height", "0");
+              jQuery(element).animate(
+                {
+                  height: "auto",
+                },
+                8000,
+                done
+              );
+            },
+            leave: function (element, done) {
+              element.css("height", "auto");
+              jQuery(element).animate(
+                {
+                  height: "0",
+                },
+                8000,
+                done
+              );
+            },
+          };
+        })
+        .controller("CtrlCapitulos", function ($scope, $sce) {
+          $scope.capitulos = [];
+          for (let i = 0; i < cadenaCapitulos.length; i++) {
+            let capitulo = cadenaCapitulos[i].join("<br><br>");
+            $scope.capitulos.push($sce.trustAsHtml(capitulo));
+          }
+        })
+        .controller("CtrlArticulo", function ($scope, $sce) {
+          $scope.articulos = [];
+          for (let i = 0; i < cadenaArticulos.length; i++) {
+            let indice = cadenaArticulos[i].join("<br><br>");
+            $scope.articulos.push($sce.trustAsHtml(indice));
+          }
+          $scope.indicesVisibles = new Array(cadenaArticulos.length).fill(true);
+
+          $scope.toggleIndices = function (index) {
+            $scope.indicesVisibles[index] = !$scope.indicesVisibles[index];
+          };
+          $scope.scroll = function (event) {
+            // Obtén el texto dentro del enlace (nombre del artículo)
+            let articulo = event.target.innerText.trim();
+            // Busca todos los enlaces dentro del artículo correspondiente
+            let articuloEnlaces = document.querySelectorAll(
+              "#contenido .articles a"
+            );
+            let enlaces = event.target.parentElement.querySelectorAll(
+              "#contenido .articles a"
+            );
+            // Itera sobre los enlaces y busca el que contenga el artículo (coincidencia parcial)
+            let index = -1;
+            for (let i = 0; i < articuloEnlaces.length; i++) {
+              if (articuloEnlaces[i].innerText.trim().includes(articulo)) {
+                index = i;
+                break;
+              }
+            }
+            if (index !== -1) {
+              // Encuentra el artículo actual en el array de artículos
+              let capIndex = cadenaArticulos.indexOf(articulo);
+              // (Asumo que tienes una estructura de datos en algún lugar que coincida con la estructura HTML)
+              console.log(
+                "Artículo:",
+                articulo,
+                "Índice de Artículo:",
+                capIndex,
+                "Índice de Enlace:",
+                index
+              );
+              articuloEnlaces[index].parentNode.scrollIntoView({
+                behavior: "smooth",
+              });
+            } else {
+              console.log("No se encontró el enlace en el Artículo:", articulo);
+            }
+          };
+        })
+        .controller("CtrlParrafos", function ($scope, $sce) {
+          $scope.parrafos = [];
+          for (let i = 0; i < cadenaParrafos.length; i++) {
+            let parrafo = "";
+            for (let j = 0; j < cadenaParrafos[i].length; j++) {
+              parrafo += cadenaParrafos[i][j];
+              if (j < cadenaParrafos[i].length - 1) {
+                parrafo += "<br><br>";
+              }
+            }
+            $scope.parrafos.push($sce.trustAsHtml(parrafo));
+          }
+          //Esto básicamente aparecerá o no los párrafos dependiendo el booleano.
+          $scope.mostrar_parrafos = new Array(cadenaParrafos.length).fill(true);
+          $scope.Parrafos_visibles = function (index) {
+            $scope.mostrar_parrafos[index] = !$scope.mostrar_parrafos[index];
+          };
+        });
+      function agregarCapitulo(cadena) {
+        for (let i = 0; i < cadena.length; i++) {
+          cadenaCapitulos.push(cadena[i]);
+        }
+      }
+
+      function agregarArticulos(cadena) {
+        for (let i = 0; i < cadena.length; i++) {
+          cadenaArticulos.push(cadena[i]);
+        }
+      }
+
+      function agregarParrafos(cadena) {
+        for (let i = 0; i < cadena.length; i++) {
+          cadenaParrafos.push(cadena[i]);
+        }
+      }
+
+      /*----------------*/ agregarCapitulo([["Napoleón"]]); /*----------------*/
+      agregarArticulos([["¿Quién era Napoleón?"]]);
+      agregarParrafos([
+        [
+          "Napoleón Bonaparte fue un militar y líder político francés que desempeñó un papel crucial en la historia de Francia y de Europa en el siglo XIX. Nació el 15 de agosto de 1769 en Córcega, una isla en el Mediterráneo que en ese momento era parte del Reino de Génova. Napoleón ascendió rápidamente en las filas militares durante la Revolución Francesa y se convirtió en gobernante de Francia",
+        ],
+      ]);
+      agregarParrafos([
+        [
+          "Sus éxitos militares le valieron el rango de general y, finalmente, se autoproclamó Primer Cónsul en 1799 tras un golpe de Estado. Napoleón consolidó su poder y en 1804 se autoproclamó Emperador de los Franceses. Durante su gobierno, llevó a cabo una serie de reformas legales y administrativas conocidas como el Código Napoleónico, que tuvo un impacto duradero en la legislación moderna.",
+        ],
+      ]);
+      agregarParrafos([
+        [
+          "Napoleón lideró a Francia en una serie de guerras conocidas como las Guerras Napoleónicas, en las que buscó expandir su imperio por toda Europa. Su éxito inicial fue notable, pero su eventual derrota en la Batalla de Leipzig en 1813 y la derrota final en la Batalla de Waterloo en 1815 llevaron al fin de su régimen. Napoleón fue desterrado a la isla de Elba, pero escapó y regresó brevemente al poder durante los Cien Días en 1815 antes de ser derrotado definitivamente en Waterloo.",
+        ],
+      ]);
+      agregarParrafos([
+        [
+          "Fue exiliado a la isla de Santa Elena en el Atlántico, donde murió el 5 de mayo de 1821. Napoleón Bonaparte dejó un legado duradero en la historia europea, tanto por sus logros como por las consecuencias de sus guerras y el impacto de su figura en la política y la cultura.",
+        ],
+      ]);
+      agregarArticulos([["Éxito en las batallas de Napoleón"]]);
+      agregarParrafos([
+        [
+          "Napoleón Bonaparte fue un estratega militar brillante y logró numerosos éxitos en el campo de batalla durante las Guerras Napoleónicas. Aquí hay algunas de sus victorias más destacadas:",
+        ],
+      ]);
+      agregarParrafos([
+        [
+          String.raw` 
+                <ol>
+                    <li><b>Austerlitz (1805):</b> Conocida como la "Batalla de los Tres Emperadores", Napoleón derrotó a las fuerzas rusas y austriacas en Austerlitz, consolidando su dominio en Europa y demostrando su habilidad táctica.</li>
+                    <li><b>Jena-Auerstedt (1806):</b> En esta campaña, Napoleón venció a los prusianos en Jena y a los rusos en Auerstedt, marcando el declive del poder militar prusiano.</li>
+                    <li><b>Wagram (1809):</b> Napoleón derrotó a las fuerzas austriacas en esta batalla, consolidando su control sobre gran parte de Europa central.</li>
+                    <li><b>Friedland (1807):</b> En esta batalla contra los rusos, Napoleón demostró su maestría táctica, llevando a la rendición del zar Alejandro I y allanando el camino para el Tratado de Tilsit.</li>
+                    <li><b>Jena (1806):</b> Napoleón infligió una derrota decisiva a las fuerzas prusianas en esta batalla, contribuyendo a la caída del Reino de Prusia.</li>
+                    <li><b>Marengo (1800):</b> Esta victoria temprana durante las campañas italianas consolidó la posición de Napoleón en Francia como Primer Cónsul.</li>
+                    <li><b>Ulm y Austerlitz (1805): </b> Napoleón logró una serie de éxitos en estas campañas, infligiendo derrotas significativas a Austria y Rusia.</li>
+                    <li><b>Rivoli (1797):</b> Durante las campañas en Italia, Napoleón obtuvo una victoria decisiva sobre las fuerzas austríacas en Rivoli, consolidando su reputación como un líder militar talentoso.</li>   
+                </ol>
+         `,
+        ],
+      ]);
+
+      agregarParrafos([
+        [
+          "Estos son solo algunos ejemplos, y la lista de las victorias de Napoleón es extensa. Sin embargo, su imperio y sus éxitos militares se vieron finalmente truncados por sus derrotas en Leipzig (1813) y Waterloo (1815).",
+        ],
+      ]);
+      agregarArticulos([["Fracaso en las batallas de Napoleón"]]);
+      agregarParrafos([
+        [
+          "Aunque Napoleón Bonaparte fue conocido por sus numerosas victorias, también experimentó algunos fracasos notables que eventualmente contribuyeron a su caída y al fin de las Guerras Napoleónicas. Algunos de estos fracasos incluyen:",
+        ],
+      ]);
+      agregarParrafos([
+        [
+          String.raw`
+                <ol>
+                    <li><b>Rusia (1812):</b> La invasión de Rusia fue un punto de inflexión en la carrera militar de Napoleón. A pesar de tomar Moscú, las tácticas de tierra quemada y el duro invierno ruso llevaron a la retirada de las tropas francesas, resultando en grandes pérdidas y debilitando significativamente el ejército de Napoleón.</li>
+                    <li><b>Leipzig (1813):</b> La Batalla de Leipzig, también conocida como la Batalla de las Naciones, fue una derrota importante para Napoleón. Las fuerzas aliadas, incluyendo prusianos, austriacos y rusos, derrotaron al ejército francés, marcando el declive del poder napoleónico en Europa.</li>
+                    <li><b>Waterloo (1815):</b> La Batalla de Waterloo fue la derrota final de Napoleón. En este enfrentamiento contra las fuerzas británicas y prusianas lideradas por el Duque de Wellington y el Mariscal Blücher, Napoleón sufrió una derrota decisiva, llevando a su abdicación y posterior exilio a la isla de Santa Elena.</li>
+                    <li><b>España (1808-1814):</b>  La Guerra de Independencia Española fue una lucha prolongada y costosa para Napoleón. La resistencia española, combinada con la intervención británica, desgastó las fuerzas francesas y debilitó el dominio napoleónico en la península ibérica</li>
+                    <li><b>Egipto (1798-1799): </b>  La expedición a Egipto fue una campaña militar que, a pesar de algunas victorias iniciales, terminó en un punto muerto y eventual retirada de las fuerzas francesas ante la intervención británica.</li> 
+                </ol>
+        
+        `,
+        ],
+      ]);
+      agregarParrafos([
+        [
+          "Estos son solo algunos ejemplos de los fracasos de Napoleón. Aunque fue un líder militar formidable, sus ambiciones expansivas y las resistencias crecientes finalmente llevaron al declive de su imperio y a su derrota final en Waterloo.",
+        ],
+      ]);
+
+      /*----------------*/ agregarCapitulo([
+        ["General Castaños"],
+      ]); /*----------------*/
+      agregarArticulos([["¿Quién era general Castaños?"]]);
+      agregarParrafos([
+        [
+          "El General Francisco Javier Castaños Aragorri Urioste y Olavide (1758-1852) fue un militar y político español conocido por su papel en la Guerra de la Independencia Española contra la ocupación napoleónica.",
+        ],
+      ]);
+      agregarParrafos([
+        [
+          "Castaños destacó especialmente por su actuación en la Batalla de Bailén, librada en julio de 1808 durante la Guerra de la Independencia. En esta batalla, el general español, al mando del ejército español, logró una victoria decisiva sobre las fuerzas francesas bajo el mando del General Pierre Dupont. La victoria en Bailén fue significativa, ya que fue la primera derrota importante infligida al ejército napoleónico durante la guerra.",
+        ],
+      ]);
+      agregarParrafos([
+        [
+          "La victoria en Bailén tuvo un impacto estratégico importante y contribuyó a elevar la moral del pueblo español y de otros países que luchaban contra la invasión napoleónica. Además, Castaños fue ascendido a Capitán General y recibió varios honores por su papel en esta batalla.",
+        ],
+      ]);
+      agregarParrafos([
+        [
+          "General Castaños continuó sirviendo en diversas capacidades militares y políticas a lo largo de su carrera. Después de la guerra, participó en la política y ocupó varios cargos gubernamentales. Su figura es recordada como una de las personalidades destacadas en la resistencia española contra la ocupación napoleónica durante la Guerra de la Independencia.",
+        ],
+      ]);
+
+      let boton = document.querySelectorAll(".b");
+      let indice = document.getElementById("column-indice");
+      boton[1].style.display = "none";
+      boton[0].addEventListener("click", function () {
+        indice.style.display = "flex";
+        boton[0].style.display = "none";
+        boton[1].style.display = "flex";
+      });
+
+      boton[1].addEventListener("click", function () {
+        indice.style.display = "none";
+        boton[1].style.display = "none";
+        boton[0].style.display = "flex";
+      });
+
+      // Función que se ejecutará cuando cambie el tamaño de la ventana
+      function handleResize() {
+        // Obtén el ancho y alto actual de la ventana
+        var windowWidth =
+          window.innerWidth ||
+          document.documentElement.clientWidth ||
+          document.body.clientWidth;
+        // var windowHeight = window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight;
+
+        // Realiza acciones basadas en el tamaño actual de la ventana
+        if (windowWidth < 768) {
+          indice.style.display = "none";
+          // Realiza acciones específicas para ventanas pequeñas
+        } else {
+          indice.style.display = "flex";
+          boton[0].style.display = "flex";
+          boton[1].style.display = "none";
+          // Realiza acciones específicas para ventanas grandes
+        }
+      }
+
+      // Agrega un escuchador de eventos al evento resize
+      window.addEventListener("resize", handleResize);
+
+      // Llama a handleResize() al cargar la página para inicializar según el tamaño inicial de la ventana
+      handleResize();
+    </script>
+  </body>
+</html>
