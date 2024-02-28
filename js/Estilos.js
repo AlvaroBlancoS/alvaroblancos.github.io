@@ -8,47 +8,42 @@ export const pantallaNormal = () => {
     width: 20%;
     height: auto;
     /* gap: 1px;*/
-    font-size: x-large;
-    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+    font-size: 15px;
+    font-family: Verdana;
     font-weight: bolder;
     box-shadow: 5px 10px #888888;
     margin-right: 20px;
     overflow: auto;
-    resize: both;
+   /* resize: both;*/
     /* resize: vertical;*/
 }
 
 #column-indice a {
-    /*Hacer que desaparezca puntos u otros texos de decoracion*/
     text-decoration: none;
     cursor: pointer;
+    text-align: left;
 }
-
 .indices {
-    display: block;
-    /*   cursor: grap;*/
+    display: flex;
+    flex-direction:column;
 }
 
 .indices li {
     /*Separa los indices*/
     margin-bottom: 5px;
+    width:auto;
     list-style: none;
     font-size: smaller;
+    text-align: left;
     font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
 }
 
 #contenido {
     display: flow-root;
-    /* border-style: dashed;*/
-    /*  background-color: #cfc9c9;*/
     height: 800px;
     width: 80%;
     margin-left: 25%;
     overflow-y: scroll;
-    /*   overflow-x: scroll;*/
-    resize: vertical;
-    /*   cursor: grap;*/
-    /* position: absolute;*/
 }
 
 .aparacionesCapitulos {
@@ -129,17 +124,29 @@ export const movil = () => {
   @media only screen and (max-width: 767px) {
     body {
         font-size: 14px;
-        background-color: #888888;
+       /* background-color: #888888;*/
     }
-
+    /**/
     #column-indice {
         display: none;
         position: fixed;
+        font-size: 15px;
+        font-family: Verdana;
+        font-weight: bolder;
         width: 50%;
-        height: 20%;
-        resize: none;
+        height: auto;
         top: 400px;
         right: 50px;
+    }
+    .indices li {
+        /*Separa los indices*/
+        margin-bottom: 5px;
+        width:auto;
+        list-style: none;
+        font-size: 10px;
+        text-align: left;
+        font-family: Verdana;
+        border-style: dashed;
     }
 
     #contenido {
@@ -149,7 +156,7 @@ export const movil = () => {
     }
 
     .capitulos-indice {
-        font-size: small;
+        font-size:10px ;
     }
 
     #boton-flotante {
@@ -160,7 +167,7 @@ export const movil = () => {
         top: 400px;
         display: flex;
         gap: 10px;
-        background-color: grey;
+       /* background-color: grey;*/
     }
 
     .botones {
@@ -195,7 +202,6 @@ export const movil = () => {
         background-color: aquamarine;
         transition: 0.5s;
     }
-
 } 
   `;
   const style = document.createElement("style");
