@@ -162,128 +162,13 @@
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular-sanitize.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
-    <script>
-      let cadenaCapitulos = [];
-      let cadenaArticulos = [];
-      let cadenaParrafos = [];
-      let cajaTexto = angular.module("appLectura", ["ngSanitize", "ngAnimate"]);
-      cajaTexto
-        .animation(".capitulos", function () {
-          return {
-            enter: function (element, done) {
-              element.css("height", "0");
-              jQuery(element).animate(
-                {
-                  height: "auto",
-                },
-                8000,
-                done
-              );
-            },
-            leave: function (element, done) {
-              element.css("height", "auto");
-              jQuery(element).animate(
-                {
-                  height: "0",
-                },
-                8000,
-                done
-              );
-            },
-          };
-        })
-        .controller("CtrlCapitulos", function ($scope, $sce) {
-          $scope.capitulos = [];
-          for (let i = 0; i < cadenaCapitulos.length; i++) {
-            let capitulo = cadenaCapitulos[i].join("<br><br>");
-            $scope.capitulos.push($sce.trustAsHtml(capitulo));
-          }
-        })
-        .controller("CtrlArticulo", function ($scope, $sce) {
-          $scope.articulos = [];
-          for (let i = 0; i < cadenaArticulos.length; i++) {
-            let indice = cadenaArticulos[i].join("<br><br>");
-            $scope.articulos.push($sce.trustAsHtml(indice));
-          }
-          $scope.indicesVisibles = new Array(cadenaArticulos.length).fill(true);
-
-          $scope.toggleIndices = function (index) {
-            $scope.indicesVisibles[index] = !$scope.indicesVisibles[index];
-          };
-          $scope.scroll = function (event) {
-            // Obtén el texto dentro del enlace (nombre del artículo)
-            let articulo = event.target.innerText.trim();
-            // Busca todos los enlaces dentro del artículo correspondiente
-            let articuloEnlaces = document.querySelectorAll(
-              "#contenido .articles a"
-            );
-            let enlaces = event.target.parentElement.querySelectorAll(
-              "#contenido .articles a"
-            );
-            // Itera sobre los enlaces y busca el que contenga el artículo (coincidencia parcial)
-            let index = -1;
-            for (let i = 0; i < articuloEnlaces.length; i++) {
-              if (articuloEnlaces[i].innerText.trim().includes(articulo)) {
-                index = i;
-                break;
-              }
-            }
-            if (index !== -1) {
-              // Encuentra el artículo actual en el array de artículos
-              let capIndex = cadenaArticulos.indexOf(articulo);
-              // (Asumo que tienes una estructura de datos en algún lugar que coincida con la estructura HTML)
-              console.log(
-                "Artículo:",
-                articulo,
-                "Índice de Artículo:",
-                capIndex,
-                "Índice de Enlace:",
-                index
-              );
-              articuloEnlaces[index].parentNode.scrollIntoView({
-                behavior: "smooth",
-              });
-            } else {
-              console.log("No se encontró el enlace en el Artículo:", articulo);
-            }
-          };
-        })
-        .controller("CtrlParrafos", function ($scope, $sce) {
-          $scope.parrafos = [];
-          for (let i = 0; i < cadenaParrafos.length; i++) {
-            let parrafo = "";
-            for (let j = 0; j < cadenaParrafos[i].length; j++) {
-              parrafo += cadenaParrafos[i][j];
-              if (j < cadenaParrafos[i].length - 1) {
-                parrafo += "<br><br>";
-              }
-            }
-            $scope.parrafos.push($sce.trustAsHtml(parrafo));
-          }
-          //Esto básicamente aparecerá o no los párrafos dependiendo el booleano.
-          $scope.mostrar_parrafos = new Array(cadenaParrafos.length).fill(true);
-          $scope.Parrafos_visibles = function (index) {
-            $scope.mostrar_parrafos[index] = !$scope.mostrar_parrafos[index];
-          };
-        });
-      function agregarCapitulo(cadena) {
-        for (let i = 0; i < cadena.length; i++) {
-          cadenaCapitulos.push(cadena[i]);
-        }
+    <script type="module">
+      import{
+        agregarCapitulo,
+        agregarArticulo,
+        agregarParrafo,
+        from "./js/Libro.js";
       }
-
-      function agregarArticulos(cadena) {
-        for (let i = 0; i < cadena.length; i++) {
-          cadenaArticulos.push(cadena[i]);
-        }
-      }
-
-      function agregarParrafos(cadena) {
-        for (let i = 0; i < cadena.length; i++) {
-          cadenaParrafos.push(cadena[i]);
-        }
-      }
-
       /*----------------*/ agregarCapitulo([["Napoleón"]]); /*----------------*/
       agregarArticulos([["¿Quién era Napoleón?"]]);
       agregarParrafos([
@@ -384,48 +269,7 @@
           "General Castaños continuó sirviendo en diversas capacidades militares y políticas a lo largo de su carrera. Después de la guerra, participó en la política y ocupó varios cargos gubernamentales. Su figura es recordada como una de las personalidades destacadas en la resistencia española contra la ocupación napoleónica durante la Guerra de la Independencia.",
         ],
       ]);
-
-      let boton = document.querySelectorAll(".b");
-      let indice = document.getElementById("column-indice");
-      boton[1].style.display = "none";
-      boton[0].addEventListener("click", function () {
-        indice.style.display = "flex";
-        boton[0].style.display = "none";
-        boton[1].style.display = "flex";
-      });
-
-      boton[1].addEventListener("click", function () {
-        indice.style.display = "none";
-        boton[1].style.display = "none";
-        boton[0].style.display = "flex";
-      });
-
-      // Función que se ejecutará cuando cambie el tamaño de la ventana
-      function handleResize() {
-        // Obtén el ancho y alto actual de la ventana
-        var windowWidth =
-          window.innerWidth ||
-          document.documentElement.clientWidth ||
-          document.body.clientWidth;
-        // var windowHeight = window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight;
-
-        // Realiza acciones basadas en el tamaño actual de la ventana
-        if (windowWidth < 768) {
-          indice.style.display = "none";
-          // Realiza acciones específicas para ventanas pequeñas
-        } else {
-          indice.style.display = "flex";
-          boton[0].style.display = "flex";
-          boton[1].style.display = "none";
-          // Realiza acciones específicas para ventanas grandes
-        }
-      }
-
-      // Agrega un escuchador de eventos al evento resize
-      window.addEventListener("resize", handleResize);
-
-      // Llama a handleResize() al cargar la página para inicializar según el tamaño inicial de la ventana
-      handleResize();
     </script>
+    <script src="./js/Botones.js"></script>
   </body>
 </html>
