@@ -87,7 +87,7 @@ export function agregarArticulo(cadena) {
   }
 }
 
-export function agregarParrafo(cadena) {
+export function agregarParrafos(cadena) {
   for (let i = 0; i < cadena.length; i++) {
     cadenaParrafos.push(cadena[i]);
   }
