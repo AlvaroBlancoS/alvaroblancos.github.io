@@ -42,7 +42,7 @@ export const pantallaNormal = () => {
     display: flow-root;
     height: 800px;
     width: 80%;
-    margin-left: 25%;
+    margin-left: 21%;
     overflow-y: scroll;
 }
 
