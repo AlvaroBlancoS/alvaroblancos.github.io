@@ -146,7 +146,7 @@ export const movil = () => {
         font-size: 10px;
         text-align: left;
         font-family: Verdana;
-        border-style: dashed;
+        /*border-style: dashed;*/
     }
 
     #contenido {
