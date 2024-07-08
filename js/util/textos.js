@@ -74,7 +74,7 @@ export const agregarTitulo = (titulo, estilo, tamanio, color, id) => {
     console.error("Tamaño de título no permitido");
   } else {
     crearTitulo.style.fontFamily = estilo;
-    crearTitulo.textContent = titulo;
+    crearTitulo.innerHTML = titulo;
     crearTitulo.style.color = color;
     crearTitulo.id = id;
     contenedor.appendChild(crearTitulo);
@@ -96,7 +96,7 @@ export const agregarTitulo_v2 = (titulo, estilo, tamanio, color, id) => {
     let crearTitulo = document.createElement(tamanio);
     crearTitulo.style.fontFamily = estilo;
     crearTitulo.style.fontFamily = estilo;
-    crearTitulo.textContent = titulo;
+    crearTitulo.innerHTML = titulo;
     crearTitulo.style.color = color;
     contenedor.appendChild(crearTitulo);
     crearTitulo.textContent = titulo;
