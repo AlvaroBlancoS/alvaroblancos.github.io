@@ -1,3 +1,6 @@
+let contenedor = document.getElementById("root");
+contenedor.style.display = "flex";
+contenedor.style.flexDirection = "column";
 /**
  *
  * @param {*} op elegir la opción de linea de texto
